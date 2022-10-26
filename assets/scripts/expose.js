@@ -18,15 +18,15 @@ function init() {
 
     if(hornName == "air-horn"){
       console.log("hornName was airhorn")
-      image.src = "../images/air-horn.svg";
+      image.src = "assets/images/air-horn.svg";
     }
     if(hornName == "car-horn"){
       console.log("hornName was car horn")
-      image.src = "../images/car-horn.svg";
+      image.src = "assets/images/car-horn.svg";
     }
     if(hornName == "party-horn"){
       console.log("hornName was  party horn")
-      image.src = "../images/party-horn.svg";
+      image.src = "assets/images/party-horn.svg";
     }
 
 
