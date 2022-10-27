@@ -34,29 +34,60 @@ function init() {
   // When user changes and selects a new voice 
   selection.addEventListener('change', ()=>{
 
-    // Find the corresponding voice in the list 
-    voices.forEach((voice)=> {
-
-      // if the selected voice matches an entry in the list
-      if(selection.value.includes(voice.name)){
-
-        console.log(voice.lang + " was selected");
-
-        // create a new script for the voice by getting the user input
-        script = new SpeechSynthesisUtterance(inputTxt.value);
-
-        // set the script's language to the selected voice's language
-        script.lang = voice.lang;
-        console.log("Synth will speak: " + inputTxt.value)
-      }
-
-    })
+   updateVoice();
    
   })
 
+function updateVoice() {
+  // Find the corresponding voice in the list 
+  voices.forEach((voice)=> {
 
-  playBtn.addEventListener('click', ()=> {
-    synth.speak(script);
+    // if the selected voice matches an entry in the list
+    if(selection.value.includes(voice.name)){
+
+      console.log(voice.lang + " was selected");
+
+      // create a new script for the voice by getting the user input
+      script = new SpeechSynthesisUtterance(inputTxt.value);
+
+      // set the script's language to the selected voice's language
+      script.lang = voice.lang;
+      console.log("Synth will speak: " + inputTxt.value)
+    }
+
   })
+}
+
+
+  let face = document.getElementsByTagName("img")[0]
+  playBtn.addEventListener('click', ()=> {
+    updateVoice();
+    if(synth.speaking){
+      synth.cancel();
+      face.src = "assets/images/smiling.png"
+    }
+    else {
+      synth.speak(script);
+      face.src = "assets/images/smiling-open.png"
+      script.onend = (event) => {
+        console.log(`${event.name} boundary reached after ${event.elapsedTime} ms.`);
+        setTimeout(()=> {face.src = "assets/images/smiling.png"},500);
+
+      }
+      
+    }
+      /*let time = new SpeechSynthesisEvent();
+
+      let elapsed = SpeechSynthesisEvent.elapsedTime;
+
+      setTimeout(()=>{
+        face.src = "assets/images/smiling.png";
+      }, elapsed)
+    }
+    */
+
+    })
+
+
 
 }
